@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="6e3578f92f7462d1a935a1d36173e3bdd1234976">
+        <dex dex="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.2.0_6c4b7022f28dcfc1092c6ffbe36ea3e9602100f5.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="8c108c22c99e794eff255bb34d2a461200c4cbb0">
+        <dex dex="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.2.0_667cfff487c163b8f41def4d1ba556d57577fe56.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="d4dd9055de124a0382ee17d200d654bf1451abd0">
+        <dex dex="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/pre-dexed/debug/instant-run-bootstrap_21da649f98094ddfffcae1f1b29e783bc8535b1b.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="e5f32fa48a3eb2de0c987025c11b6e3864b634d9">
+        <dex dex="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.2.0_675629ab2629eae528a3e5f93176252617d5e4df.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/libs/internal_impl-23.2.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="6e239441500605809818997dd63b62a947195f8c">
+        <dex dex="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/pre-dexed/debug/internal_impl-23.2.0_d785e3ef8694439f4b9f915f96e344a9a02a711b.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/exploded-aar/dialoglibaryr/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9a22364b235118744be2d0f92dba2362fcc05647">
+        <dex dex="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/pre-dexed/debug/intermediates-exploded-aar-dialoglibaryr_0c0ebad4178357adce6ff04d6c5ee46ed8e5dc19.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.2.0/support-annotations-23.2.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="c5bf571bb10462bd90e5419ade67793f71acbc87">
+        <dex dex="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/pre-dexed/debug/support-annotations-23.2.0_5e5979febff22eca8b187538b7a4db7e138e1f46.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="4dc8b417b4a7e65d6d016d5e584e825b4f42aef2">
+        <dex dex="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/pre-dexed/debug/instant-run_9d1dcd85d9f55fcde5d46e1be5a6a1a88ffe8bbb.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="292a9fa091757208efa65e77eef63088247e51f3">
+        <dex dex="/home/rails-dev/Documents/StudioWS/SamplesWS/DatabaseStructrur/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.2.0_fa633c4e1891d212aa413cfeeb2248308cb59e18.jar" />
+    </item>
+
+</items>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_background"
+    android:padding="@dimen/activity_horizontal_margin"
+    >
+
+    <ListView
+        android:id="@+id/view_dialog_choice_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/view_dialog_choice_section_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" >
+
+        <Button
+            android:id="@+id/view_dialog_choice_button_cancel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@android:string/cancel" >
+        </Button>
+    </RelativeLayout>
+
+</LinearLayout>
