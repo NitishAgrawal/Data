@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.app.android.db.dbhelper.DBDataTypes.BaseType;
+import com.app.android.db.dbhelper.DBDataTypes.DBPKString;
+import com.app.android.db.dbhelper.DBDataTypes.DBPKint;
 import com.app.android.db.dbhelper.DBDataTypes.DBString;
 import com.app.android.db.dbhelper.DBDataTypes.DBboolean;
 import com.app.android.db.dbhelper.DBDataTypes.DBint;
@@ -17,9 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by rails-dev on 25/12/15.
- */
 public abstract class BaseModel implements Serializable {
 
     private static final String SORT_TYPE_ASC  = "ASC";
@@ -102,9 +101,15 @@ public abstract class BaseModel implements Serializable {
                 } else if(retrieveType.equals(GET_CONTENT_VALUES)){
                     try {
                         if (fieldType.toString().contains("int")) {
-                            values.put(fieldName, (Integer.parseInt((String) ((BaseType) field.get(this)).getFieldDb())));
+                            //values.put(fieldName, (Integer.parseInt((String) ((BaseType) field.get(this)).getFieldDb())));
+                            values.put(fieldName, ((int) ((BaseType) field.get(this)).getFieldDb()));
                         } else if (fieldType.toString().contains("String")) {
-                             String dbStringFld = (String) ((DBString) field.get(this)).getFieldDb();
+                            String dbStringFld;
+                            if (fieldType.toString().contains("PK")) {
+                                dbStringFld = (String) ((DBPKString) field.get(this)).getFieldDb();
+                            } else {
+                                dbStringFld = (String) ((DBString) field.get(this)).getFieldDb();
+                            }
                             Log.e("dbStringFld",""+dbStringFld);
                             Log.e("fieldName",""+fieldName);
                             values.put(fieldName, dbStringFld);
@@ -133,22 +138,17 @@ public abstract class BaseModel implements Serializable {
         return ((HashMap<String, String>)getCommonType(GET_DB_FIELDS));
     }
 
-
     private String getColumnType(Field field){
         //TODO
         Type fieldType = field.getGenericType();
         Log.e("getColumnType",""+fieldType.toString());
         try {
             if (fieldType.toString().contains("int")) {
-                return (((DBint)field.get(this)).isPkValueDb())?INTEGER_PRIMARY_KEY:INTEGER;
-                //return INTEGER;
+                return (fieldType.toString().contains("PK"))
+                        ?INTEGER_PRIMARY_KEY:INTEGER;
             }else if (fieldType.toString().contains("String")) {
-                DBString dbString =((DBString) field.get(this));
-                //Log.e("dbString ",""+dbString.toString());
-                Log.e("dbString pkValue",""+dbString.isPkValueDb());
-                //return   (dbString.is PkValue())?TEXT_PRIMARY_KEY:TEXT;
-                //return (((DBString) field.get(this)).is PkValue())?TEXT_PRIMARY_KEY:TEXT;
-                return TEXT;
+                return (fieldType.toString().contains("PK"))?TEXT_PRIMARY_KEY:TEXT;
+                // return TEXT;
             }else if (fieldType.toString().contains("boolean")) {
                 return INTEGER;
             }
@@ -172,9 +172,17 @@ public abstract class BaseModel implements Serializable {
                     Type fieldType = field.getGenericType();
                     try {
                         if(fieldType.toString().contains("int")){
-                            ((DBint)fieldType).setFieldDb(cursor.getInt(i));
+                            if (fieldType.toString().contains("PK")) {
+                                ((DBPKint)fieldType).setFieldDb(cursor.getInt(i));
+                            } else {
+                                ((DBint)fieldType).setFieldDb(cursor.getInt(i));
+                            }
                         }else if(fieldType.toString().contains("String")){
-                            ((DBString)fieldType).setFieldDb(cursor.getString(i));
+                            if (fieldType.toString().contains("PK")) {
+                                ((DBPKString)fieldType).setFieldDb(cursor.getString(i));
+                            } else {
+                                ((DBString)fieldType).setFieldDb(cursor.getString(i));
+                            }
                         }else if(fieldType.toString().contains("boolean")){
                             ((DBboolean)fieldType).setFieldDb((cursor.getInt(i) == 1) ? true : false);
                         }
@@ -352,11 +360,20 @@ public abstract class BaseModel implements Serializable {
                         if (fieldType.toString().contains("int")) {
                             int value = cursor.getInt(cursor.getColumnIndex(fieldName));
                             Log.e("print all vaule", "" + value);
-                            field11.set(subNew2, new DBint(value, isPkField));
+                           if(fieldType.toString().contains("PK")){
+                               field11.set(subNew2, new DBPKint(value));
+                            }else{
+                                field11.set(subNew2, new DBint(value));
+                            }
                         } else if (fieldType.toString().contains("String")) {
                             String value = cursor.getString(cursor.getColumnIndex(fieldName));
                             Log.e("print all vaule", "" + value);
-                            field11.set(subNew2, new DBString(value, isPkField));
+
+                            if (fieldType.toString().contains("PK")) {
+                                field11.set(subNew2, new DBPKString(value));
+                            } else {
+                                field11.set(subNew2, new DBString(value));
+                            }
                         } else if (fieldType.toString().contains("boolean")) {
                             boolean value = (cursor.getInt(cursor.getColumnIndex(fieldName)))==1;
                             Log.e("print all vaule",""+value);
@@ -456,6 +473,10 @@ public abstract class BaseModel implements Serializable {
                         BaseType childObj = null;
                         if(fieldStr.contains("DBString")) {
                             childObj = ((DBString)field.get(this));
+                        }else if(fieldStr.contains("DBPKString")) {
+                            childObj = ((DBPKString)field.get(this));
+                        }else if(fieldStr.contains("DBPKint")) {
+                            childObj = ((DBPKint)field.get(this));
                         }else if(fieldStr.contains("DBint")) {
                             childObj = ((DBint)field.get(this));
                         }else if(fieldStr.contains("DBboolean")) {
@@ -484,34 +505,33 @@ public abstract class BaseModel implements Serializable {
         return new DBint();
     }
 
-    public DBint makeInt(boolean value){
-        return new DBint(value);
+    public DBPKint makePKInt(){
+        return new DBPKint();
     }
 
     public DBint makeInt(int field){
         return new DBint(field);
     }
 
-    public DBint makeInt(int field,boolean value){
-        return new DBint(field,value);
+    public DBPKint makePKInt(int field){
+        return new DBPKint(field);
     }
-
 
     public DBString makeStr(){
         return new DBString();
     }
 
-    public DBString makeStr(boolean value){
-        return new DBString(value);
+    public DBPKString makePKStr(){
+        return new DBPKString();
     }
 
     public DBString makeStr(String field){
         return new DBString(field);
     }
 
-    public DBString makeStr(String field,boolean value){
-        return new DBString(field,value);
-    }
+    public DBPKString makePKStr(String field){
+            return new DBPKString(field);
+        }
 
     public DBboolean makeBoolean(){
         return new DBboolean();

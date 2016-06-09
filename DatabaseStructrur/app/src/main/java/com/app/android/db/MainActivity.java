@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.app.android.db.apicalls.APIServiceAsyncTask;
 import com.app.android.db.apicalls.ApiRequest;
 import com.app.android.db.apicalls.Requests;
 import com.app.android.db.apicalls.Requests.ApiNames;
 import com.app.android.db.dbhelper.BaseModel;
+import com.app.android.db.dbhelper.DatabaseHandler;
 import com.app.android.db.dbhelper.SubModel;
 
 import org.json.JSONArray;
@@ -21,25 +23,21 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-import library.module.dialog.DialogBuilder;
-//import libary.module.dialog.Effectstype;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity{
 
     ArrayList<SubModel> modelList;
-    EditText editText;
+    ListView listView;
+    RowListAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        listView = (ListView) findViewById(R.id.listView);
         modelList = new ArrayList<SubModel>();
-        editText = (EditText) findViewById(R.id.editText);
-        findViewById(R.id.button).setOnClickListener(this);
-        findViewById(R.id.button2).setOnClickListener(this);
-        DialogBuilder.setDefaultCustomDialog(this,"This is a default msg",true,"Alert").setThemeLight().setCancelableOnTouchOutside(false);
-        //DialogBuilder builder = DialogBuilder.setDefaultCustomDialog(this,"This is a default msg","Alert",false,Effectstype.Newspager, Effectstype.Fadein,700,true,DialogBuilder.THEME_LIGHT);
-        //callApi();
+        callApi();
         //showData();
     }
 
@@ -53,11 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Log.e("print all vaule test30", "is " + (subNew2.id.getFieldDb()));
         Log.e("print all vaule test30", "is " + (subNew2.url.getFieldDb()));
-        Log.e("print all vaule test30", "is " + (subNew2.category_id.getFieldDb()));
+        Log.e("print all vaule test30", "is " + (subNew2.category_language.getFieldDb()));
         Log.e("print all vaule test30", "is " + (subNew2.is_deleted.getFieldDb()));
         Log.e("print all vaule test30", "is " + (subNew2.created_at.getFieldDb()));
         Log.e("print all vaule test30", "is " + (subNew2.updated_at.getFieldDb()));
-        Log.e("print all vaule test30", "is " + (subNew2.subcategory_name.getFieldDb()));
+        Log.e("print all vaule test30", "is " + (subNew2.category_name.getFieldDb()));
         Log.e("print all vaule test30", "is " + (subNew2.sequence_no.getFieldDb()));
        }
     }
@@ -67,21 +65,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         service.execute();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.button:
-                //SubModel._instance.delete("is_deleted = 0");
-                editText.setText("" + BaseModel.find(Integer.parseInt(editText.getText().toString()), SubModel._instance));
-                break;
-
-            case R.id.button2:
-                //SubModel._instance.deleteAll();
-                //editText.setText("");
-                goToNextWithData();
-                break;
-        }
-    }
 
     class AppService extends APIServiceAsyncTask{
 
@@ -100,27 +83,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     modelNew2 = new SubModel(
                             row.getInt("id"),
                             (row.getJSONObject("object_data").getString("url")).toString(),
-                            row.getString("category_id"),
+                            row.getString("category_language"),
                             row.getBoolean("is_deleted"),
                             //false,
                             row.getString("created_at"),
                             row.getString("updated_at"),
-                            row.getString("subcategory_name"),
+                            row.getString("category_name"),
                             row.getString("sequence_no")
-                    );
-                    if(modelNew2.update()<1){
-                     modelNew2.save();
-                    }
-                    modelList.add(modelNew2);
-                    if(i==3){
-                        Log.e("print toString ",modelNew2.toString());
 
+                    );
+                    try {
+                        if(modelNew2.update()<1){
+                            modelNew2.save();
+                            modelList.add(modelNew2);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
+                //modelList.addAll(SubModel._instance.findAllData());
+                adapter= new RowListAdapter(MainActivity.this,android.R.layout.simple_expandable_list_item_1,modelList);
+                listView.setAdapter(adapter);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            //goToNextWithData();
         }
     }
 

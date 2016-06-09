@@ -5,19 +5,12 @@ public class DBString extends BaseType{
       String fieldDb;
 
     public DBString() {
-    }
-
-    public DBString(String field, boolean pkValue) {
-        this.fieldDb = field;
-        this.pkValueDb = pkValue;
-    }
-
-    public DBString(boolean pkValue) {
-        this.pkValueDb = pkValue;
+        this.pkValueDb = false;
     }
 
     public DBString(String field) {
         this.fieldDb = field;
+        this.pkValueDb = false;
     }
 
     public void setFieldDb(String fieldDb) {
@@ -34,36 +27,3 @@ public class DBString extends BaseType{
         return STRING_TY;
     }
 }
-
-
-/*
-
-public class DBString extends BaseType{
-    String field;
-
-    public DBString() {
-    }
-
-    public DBString(String field, boolean pkValue) {
-        this.field = field;
-        this.pkValue = pkValue;
-    }
-
-    public DBString(boolean pkValue) {
-        super(pkValue);
-    }
-
-    public void setField(String field) {
-        this.field = field;
-    }
-
-    public DBString(String field) {
-        this.field = field;
-    }
-
-    @Override
-    public String getFieldType(){
-        return "String";
-    }
-}
-* */

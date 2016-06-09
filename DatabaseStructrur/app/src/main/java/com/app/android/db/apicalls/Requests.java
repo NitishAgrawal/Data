@@ -36,6 +36,6 @@ public class Requests {
     }
 
     public static final ApiRequest login = new ApiRequest
-            ("https://rondogo.herokuapp.com/api/v1/sub_categories", ServiceHandler.RequestMethod.GET,
+            ("http://www.json-generator.com/api/json/get/bHtxbbsODC?indent=2", ServiceHandler.RequestMethod.GET,
                     false,true,false,false, ApiNames.login);
 }
