@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.app.android.db.dbhelper.DBDataTypes.BaseType;
 import com.app.android.db.dbhelper.DBDataTypes.DBPKString;
@@ -251,6 +252,42 @@ public abstract class BaseModel implements Serializable {
             return 0;
         }
     }
+    public boolean delete() {
+        Field[] fields = this.getClass().getDeclaredFields();
+        String clause = "";
+        for (int i = 0; i < fields.length; i++) {
+            Field field = fields[i];
+            String fieldStr = field.toString();
+            String fieldName = fieldStr.split("."+ getClassName()+".")[1];
+            Type fieldType = field.getGenericType();
+            if(fieldType.toString().contains("PK")){
+                try {
+                    String idStr = "";
+                    int id = -10;
+                    if(fieldType.toString().contains("int")){
+                        id =  (int) ((DBPKint) field.get(this)).getFieldDb();
+                    }else if(fieldType.toString().contains("String")){
+                        idStr = (String) ((DBPKString) field.get(this)).getFieldDb();
+                    }else {
+                        Log.e("Error","Please enter your on clause");
+                    }
+                    if(id == -10 && idStr.length()<1) {
+                        Log.e("Error", "Please enter your on clause");
+                    }else if(id != -10){
+                        clause = "" + fieldName + "='" + id + "'";
+                    }else {
+                        clause = "" + fieldName + "='" + idStr + "'";
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                    Log.e("Error", "Please enter your on clause");
+                }
+            }
+        }
+        Log.e("clause", clause);
+        return delete(clause);
+    }
+
     public boolean delete(String whereClause) {
         try {
             SQLiteDatabase db =  DatabaseHandler.dbHandlerObj.getWritableDatabase();

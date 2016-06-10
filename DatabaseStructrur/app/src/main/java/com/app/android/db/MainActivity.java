@@ -5,16 +5,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.app.android.db.apicalls.APIServiceAsyncTask;
 import com.app.android.db.apicalls.ApiRequest;
 import com.app.android.db.apicalls.Requests;
 import com.app.android.db.apicalls.Requests.ApiNames;
-import com.app.android.db.dbhelper.BaseModel;
-import com.app.android.db.dbhelper.DatabaseHandler;
 import com.app.android.db.dbhelper.SubModel;
 
 import org.json.JSONArray;
@@ -23,41 +19,29 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity{
 
-    ArrayList<SubModel> modelList;
+    ArrayList<SubModel> modelList = new ArrayList<SubModel>();
     ListView listView;
-    RowListAdapter adapter;
+    CustomAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listView = (ListView) findViewById(R.id.listView);
-        modelList = new ArrayList<SubModel>();
-        callApi();
-        //showData();
+        if(SubModel._instance.count()<1) {
+            callApi();
+        }else {
+            callAdapter();
+        }
     }
 
-    private void showData() {
-        Log.e("print all data ","workin 1");
-        SubModel subModel = new SubModel();
-        Log.e("print all data ","workin 2");
-        ArrayList<SubModel> lst= ((ArrayList) subModel.findDataById(84));
-        Log.e("print all data ", "workin 4 " + lst.size());
-        for (SubModel subNew2:lst) {
-
-        Log.e("print all vaule test30", "is " + (subNew2.id.getFieldDb()));
-        Log.e("print all vaule test30", "is " + (subNew2.url.getFieldDb()));
-        Log.e("print all vaule test30", "is " + (subNew2.category_language.getFieldDb()));
-        Log.e("print all vaule test30", "is " + (subNew2.is_deleted.getFieldDb()));
-        Log.e("print all vaule test30", "is " + (subNew2.created_at.getFieldDb()));
-        Log.e("print all vaule test30", "is " + (subNew2.updated_at.getFieldDb()));
-        Log.e("print all vaule test30", "is " + (subNew2.category_name.getFieldDb()));
-        Log.e("print all vaule test30", "is " + (subNew2.sequence_no.getFieldDb()));
-       }
+    private void callAdapter() {
+        modelList.addAll(SubModel._instance.findAllData());
+        adapter= new CustomAdapter(MainActivity.this,R.layout.row,modelList);
+        listView.setAdapter(adapter);
     }
 
     private void callApi() {
@@ -85,25 +69,20 @@ public class MainActivity extends AppCompatActivity{
                             (row.getJSONObject("object_data").getString("url")).toString(),
                             row.getString("category_language"),
                             row.getBoolean("is_deleted"),
-                            //false,
                             row.getString("created_at"),
                             row.getString("updated_at"),
                             row.getString("category_name"),
                             row.getString("sequence_no")
-
                     );
                     try {
                         if(modelNew2.update()<1){
                             modelNew2.save();
-                            modelList.add(modelNew2);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                //modelList.addAll(SubModel._instance.findAllData());
-                adapter= new RowListAdapter(MainActivity.this,android.R.layout.simple_expandable_list_item_1,modelList);
-                listView.setAdapter(adapter);
+               callAdapter();
 
             } catch (JSONException e) {
                 e.printStackTrace();
