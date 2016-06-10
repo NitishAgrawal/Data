@@ -1,2 +1,1 @@
-include ':app', ':dialoglibary'
-//include ':app'
+include ':app'
