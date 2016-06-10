@@ -89,11 +89,4 @@ public class MainActivity extends AppCompatActivity{
             }
         }
     }
-
-    private void goToNextWithData(){
-        Intent intent = new Intent(MainActivity.this,MainActivity2.class);
-        intent.putExtra("data", modelList.get(1));
-        startActivity(intent);
-    }
-
 }
