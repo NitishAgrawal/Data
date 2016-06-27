@@ -20,7 +20,7 @@ public class ApiRequest {
     }
 
     public ApiRequest(String path, RequestMethod method, ApiNames reqID) {
-            this(path,method,true,true,false,false,reqID);
+        this(path,method,true,true,false,false,reqID);
     }
 
     public ApiRequest(String path, RequestMethod method, ApiNames reqID, boolean isShowProgressBar) {
@@ -53,6 +53,4 @@ public class ApiRequest {
         this.reqID = reqID;
         this.pDialogMsg = pDialogMsg;
     }
-
-
 }
