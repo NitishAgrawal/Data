@@ -29,7 +29,6 @@ put(ModelName.getInstance().getTableName(),ModelName.getInstance().getAllDBFiled
 
 ### APIServiceAsyncTask
 
-    APIServiceAsyncTask is a class you have to inherite it in your have to inherite this class and over right
-    success and failer method and fill the perameters of constructor context, object of API request class
-    which api you want to call and if you have post api then hashmet pf perameters.please check to example
-    for better understanding.
+    APIServiceAsyncTask is a class you have to inherit this class and over right success and failer method
+    and fill the perameters of constructor that is context, object of API request class which api you want
+    to call and if you have post api then Hashmet of parameters.please check example for better understanding.
