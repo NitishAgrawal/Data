@@ -4,14 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.app.android.db.dbhelper.DBDataTypes.BaseType;
-import com.app.android.db.dbhelper.DBDataTypes.DBPKString;
-import com.app.android.db.dbhelper.DBDataTypes.DBPKint;
-import com.app.android.db.dbhelper.DBDataTypes.DBString;
-import com.app.android.db.dbhelper.DBDataTypes.DBboolean;
-import com.app.android.db.dbhelper.DBDataTypes.DBint;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -25,6 +17,7 @@ public abstract class BaseModel implements Serializable {
     private static final String SORT_TYPE_ASC  = "ASC";
     private static final String SORT_TYPE_DESC  = "DESC";
     private static final String INTEGER_PRIMARY_KEY  = "INTEGER PRIMARY KEY";
+    private static final String INTEGER_PRIMARY_KEY_AUTO  = "INTEGER PRIMARY KEY AUTOINCREMENT";
     private static final String TEXT_PRIMARY_KEY = "TEXT PRIMARY KEY";
     private static final String TEXT  = "TEXT";
     private static final String INTEGER  = "INTEGER";
@@ -80,12 +73,12 @@ public abstract class BaseModel implements Serializable {
                 e.printStackTrace();
             }*/
             //Log.e("fields name", "is " + fieldStr +" type is "+fieldType);
-            if(fieldStr.contains(getClassName())){
-                String fieldName = fieldStr.split("."+ getClassName()+".")[1];
+            if(fieldStr.contains(this.getClassName()) && (!fieldStr.contains("static"))){
+                String fieldName = fieldStr.split("."+ this.getClassName()+".")[1];
                 if(retrieveType.equals(GET_DB_FIELDS)) {
                     if(fieldType.toString().contains("DB")) {
                         scheme.put(fieldName, getColumnType(field));
-                        Log.e("fields name", "is " + fieldName);
+                        Log.e("fields ame", "is " + fieldName);
                     }
                 } else if(retrieveType.equals(GET_PK_FIELDS) || retrieveType.equals(GET_PK_VALUE)){
                     String fieldTypeStr = getColumnType(field).toString();
@@ -145,8 +138,12 @@ public abstract class BaseModel implements Serializable {
         Log.e("getColumnType",""+fieldType.toString());
         try {
             if (fieldType.toString().contains("int")) {
-                return (fieldType.toString().contains("PK"))
-                        ?INTEGER_PRIMARY_KEY:INTEGER;
+                if(fieldType.toString().contains("Auto")){
+                    return INTEGER_PRIMARY_KEY_AUTO;
+                }else {
+                    return (fieldType.toString().contains("PK"))
+                            ? INTEGER_PRIMARY_KEY : INTEGER;
+                }
             }else if (fieldType.toString().contains("String")) {
                 return (fieldType.toString().contains("PK"))?TEXT_PRIMARY_KEY:TEXT;
                 // return TEXT;
@@ -166,7 +163,7 @@ public abstract class BaseModel implements Serializable {
         Field[] fields = this.getClass().getDeclaredFields();
         for (int i = 0; i < fields.length; i++) {
             String fieldStr = fields[i].toString();
-            if(fieldStr.contains(getClassName())){
+            if(fieldStr.contains(this.getClassName()) && (!fieldStr.contains("static"))){
                 String fieldName = fieldStr.split("."+ getClassName()+".")[1];
                 if(fieldName.contains("DB")) {
                     Field field = fields[i];
@@ -204,7 +201,7 @@ public abstract class BaseModel implements Serializable {
         Field[] fields = this.getClass().getDeclaredFields();
         for (int i = 0; i < fields.length; i++) {
             String fieldStr = fields[i].toString();
-            if(fieldStr.contains(getClassName())){
+            if(fieldStr.contains(this.getClassName()) && (!fieldStr.contains("static"))){
                 String fieldName = fieldStr.split("."+ getClassName()+".")[1];
                 if(fieldName.contains("db")) {
                     Field field = fields[i];
@@ -376,7 +373,8 @@ public abstract class BaseModel implements Serializable {
 
     protected BaseModel getCursorObj(Cursor cursor){
         // return new SubModel(cursor);
-        SubModel subNew2 =new SubModel(cursor);
+        //SubModel subNew2 =new SubModel(cursor);
+        BaseModel currentIns = this.getInstanse(cursor);
         Field[] fields = this.getClass().getDeclaredFields();
         String pkField = getPKField();
         for (int i = 0; i < fields.length; i++) {
@@ -384,7 +382,7 @@ public abstract class BaseModel implements Serializable {
             Field field = fields[i];
             String fieldStr = field.toString();
             Type fieldType = field.getGenericType();
-            if(fieldStr.contains(getClassName())){
+            if(fieldStr.contains(this.getClassName()) && (!fieldStr.contains("static"))){
                 String fieldName = fieldStr.split("."+ getClassName()+".")[1];
                 Log.e("print all vaule test33", "is " + fieldName+"  "+pkField+" value "+isPkField);
                                   if(fieldName.equals(pkField)){
@@ -393,28 +391,31 @@ public abstract class BaseModel implements Serializable {
                 Log.e("print all vaule test33", "is " + fieldName+"  "+pkField+" value2 "+isPkField);
                 if(fieldType.toString().contains("DB")) {
                     try {
-                        Field field11 = subNew2.getClass().getField(fieldName);
+                        Field field11 = currentIns.getClass().getField(fieldName);
                         if (fieldType.toString().contains("int")) {
                             int value = cursor.getInt(cursor.getColumnIndex(fieldName));
                             Log.e("print all vaule", "" + value);
                            if(fieldType.toString().contains("PK")){
-                               field11.set(subNew2, new DBPKint(value));
+                                if(fieldType.toString().contains("Auto")){
+                                    field11.set(currentIns, new DBPKAutoint(value));
+                                }else
+                                    field11.set(currentIns, new DBPKint(value));
                             }else{
-                                field11.set(subNew2, new DBint(value));
+                                field11.set(currentIns, new DBint(value));
                             }
                         } else if (fieldType.toString().contains("String")) {
                             String value = cursor.getString(cursor.getColumnIndex(fieldName));
                             Log.e("print all vaule", "" + value);
 
                             if (fieldType.toString().contains("PK")) {
-                                field11.set(subNew2, new DBPKString(value));
+                                field11.set(currentIns, new DBPKString(value));
                             } else {
-                                field11.set(subNew2, new DBString(value));
+                                field11.set(currentIns, new DBString(value));
                             }
                         } else if (fieldType.toString().contains("boolean")) {
                             boolean value = (cursor.getInt(cursor.getColumnIndex(fieldName)))==1;
                             Log.e("print all vaule",""+value);
-                            field11.set(subNew2, new DBboolean(value));
+                            field11.set(currentIns, new DBboolean(value));
                         }
                     } catch (NoSuchFieldException e) {
                         e.printStackTrace();
@@ -426,8 +427,10 @@ public abstract class BaseModel implements Serializable {
             }
         }
 
-        return subNew2;
+        return currentIns;
     }
+
+    protected abstract BaseModel getInstanse(Cursor cursor);
 
     // Getting single obj
     public static BaseModel find(Object id,BaseModel con) {
@@ -445,7 +448,7 @@ public abstract class BaseModel implements Serializable {
     }
 
     public List findAllData() {
-        return findAllData(getTableName(), this);
+        return findAllData(this.getTableName(), this);
     }
 
     public List findDataById(Object id) {
@@ -497,11 +500,11 @@ public abstract class BaseModel implements Serializable {
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
             String fieldStr = field.toString();
-            if(fieldStr.contains(getClassName())){
+            if(fieldStr.contains(this.getClassName()) && (!fieldStr.contains("static"))){
                 Log.e("print fieldData ", " " + fieldStr);
                 String fieldName = fieldStr.split("."+ getClassName()+".")[1];
                 String fieldType = field.getGenericType().toString();
-                Log.e("print fieldData name", " " + fieldName);
+                Log.e("print fieldData ame", " " + fieldName);
                 //Log.e("print fieldData type", " " + fieldType);
                 if(fieldType.contains("db") ) {
 
@@ -546,12 +549,20 @@ public abstract class BaseModel implements Serializable {
         return new DBPKint();
     }
 
+    public DBPKAutoint makePKAutoInt(){
+        return new DBPKAutoint();
+    }
+
     public DBint makeInt(int field){
         return new DBint(field);
     }
 
     public DBPKint makePKInt(int field){
         return new DBPKint(field);
+    }
+
+    public DBPKAutoint makePKAutoInt(int field){
+        return new DBPKAutoint(field);
     }
 
     public DBString makeStr(){

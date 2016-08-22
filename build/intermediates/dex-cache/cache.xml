@@ -1,2 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/libs/internal_impl-23.2.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6e239441500605809818997dd63b62a947195f8c">
+        <dex dex="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/pre-dexed/debug/internal_impl-23.2.0_4b2f69cbb43f99d1ed3e89c856ff3e1df4e9bda6.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/libs/android-smart-image-view-1.0.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="d76ea8c3e9a60101244d6d04aff8cc75888570f0">
+        <dex dex="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/pre-dexed/debug/android-smart-image-view-1.0.0_8962f5375d5c3a98fa3de5d509f023049cd7afa2.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="292a9fa091757208efa65e77eef63088247e51f3">
+        <dex dex="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.2.0_febab31e07d2d57abf3f3256ececfdeac35360a1.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8c108c22c99e794eff255bb34d2a461200c4cbb0">
+        <dex dex="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.2.0_24803a4d8ef95a0bc33b1d76c7a20c71dd4a7ed6.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e5f32fa48a3eb2de0c987025c11b6e3864b634d9">
+        <dex dex="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.2.0_b807380bf8fdf5e9746040da2f79693d672101e3.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6e3578f92f7462d1a935a1d36173e3bdd1234976">
+        <dex dex="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.2.0_6c0c17f1b4da8c0a01dfa1a9dd426d7a2783c657.jar" />
+    </item>
+    <item
+        jar="/home/rails-dev/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.2.0/support-annotations-23.2.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="c5bf571bb10462bd90e5419ade67793f71acbc87">
+        <dex dex="/home/rails-dev/Documents/NitishData/Codes/DataBaseStructureWithApiCalling/app/build/intermediates/pre-dexed/debug/support-annotations-23.2.0_5e5979febff22eca8b187538b7a4db7e138e1f46.jar" />
+    </item>
+
+</items>

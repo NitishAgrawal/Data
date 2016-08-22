@@ -2,15 +2,10 @@ package com.app.android.db.dbhelper;
 
 import android.database.Cursor;
 
-import com.app.android.db.dbhelper.DBDataTypes.DBPKint;
-import com.app.android.db.dbhelper.DBDataTypes.DBString;
-import com.app.android.db.dbhelper.DBDataTypes.DBboolean;
-import com.app.android.db.dbhelper.DBDataTypes.DBint;
-
 public class SubModel extends BaseModel {
 
      //Every Database column should be db field like DBint, DBString etc. and other use normal ;
-        public DBPKint id;
+        public DBPKAutoint id;
         public DBString url;
         public DBString category_language;
         public DBboolean is_deleted;
@@ -20,7 +15,7 @@ public class SubModel extends BaseModel {
         public DBString sequence_no;
 
         public SubModel() {
-                this.id= makePKInt();
+                this.id= makePKAutoInt();
                 this.url = makeStr();
                 this.category_language = makeStr();
                 this.is_deleted = makeBoolean();
@@ -32,7 +27,7 @@ public class SubModel extends BaseModel {
 
         public SubModel(int id, String url, String category_language, boolean isDeleted, String createdAt, String updatedAt,
                         String subCategoryName, String seuenceNo) {
-                this.id= makePKInt(id);
+                this.id= makePKAutoInt(id);
                 this.url = makeStr(url);
                 this.category_language = makeStr(category_language);
                 this.is_deleted = makeBoolean(isDeleted);
@@ -46,7 +41,12 @@ public class SubModel extends BaseModel {
                 super(cursor);
         }
 
-        public static SubModel _instance = new SubModel();
+    @Override
+    protected BaseModel getInstanse(Cursor cursor) {
+        return new SubModel(cursor);
+    }
+
+    public static SubModel _instance = new SubModel();
 
         public static SubModel getInstance(){
                 return _instance;

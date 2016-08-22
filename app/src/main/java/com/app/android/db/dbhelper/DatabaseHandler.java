@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
 import com.app.android.db.AppClass;
 
 import java.util.Collections;
@@ -40,7 +41,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public static final Map<String, HashMap<String,String>> dbSchema = Collections.unmodifiableMap(
             new HashMap<String, HashMap<String,String>>() {{
-                //TODO
+                //TODO add tables
                 //put(SubModel.TABLE_NAME, SubModel.getTableScheme());
                 put(SubModel.getInstance().getTableName(), SubModel.getInstance().getAllDBFileds());
             }});
